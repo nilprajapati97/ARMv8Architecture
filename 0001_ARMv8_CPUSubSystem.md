@@ -112,36 +112,6 @@ EXT["InterChip Links"]
 NOC --> EXT
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ARMv8 CPU Subsystem –
 
 ```mermaid
