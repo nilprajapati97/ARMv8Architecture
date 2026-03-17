@@ -28,4 +28,4 @@ flowchart TD
     P --> Q[Update Cache State (MESI/MOESI)]
     Q --> R[Complete Transaction]
     
-    I --> Q
+    I --> Q["Update Cache State (MESI/MOESI)"]
