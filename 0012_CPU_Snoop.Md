@@ -1,4 +1,3 @@
-flowchart TD
     A[CPU Core 0 Issues Read/Write] --> B[L1 Cache Check]
     
     B -->|Hit| C[Serve from L1 Cache]
