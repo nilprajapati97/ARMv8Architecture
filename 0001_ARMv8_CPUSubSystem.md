@@ -1,103 +1,60 @@
-# SoC Architecture – Visual Layout (Closer to Image)
+# SoC Architecture – Exact Layout Style
 
 ```mermaid
-flowchart LR
-
-%% ================= CPU =================
-subgraph CPU["CPU Subsystem (big.LITTLE)"]
-    direction TB
-    subgraph A7["A7 Cluster"]
-        A7C1["A7"]
-        A7C2["A7"]
-        A7C3["A7"]
-        A7C4["A7"]
-        A7L2["L2 Cache"]
-    end
-
-    subgraph A15["A15 Cluster"]
-        A15C1["A15"]
-        A15C2["A15"]
-        A15L2["L2 Cache"]
-    end
-
-    CCI["Coherent Interconnect"]
-    A7 --> A7L2 --> CCI
-    A15 --> A15L2 --> CCI
-end
-
-%% ================= TOP BUS =================
-NOC["FlexNoC Top Level Interconnect"]
-
-CPU --> NOC
+flowchart TB
 
 %% ================= TOP ROW =================
-subgraph TOP["Design-Specific Subsystems"]
-    direction LR
+subgraph TOP[" "]
+direction LR
 
-    GPU["GPU (3D Graphics)"]
+CPU["CPU Subsystem<br>(A7 + A15 + L2 + CCI)"]
 
-    subgraph DSP["DSP Subsystem"]
-        DSPIP["IP Blocks"]
-        DSPINT["FlexWay"]
-        DSPIP --> DSPINT
-    end
+GPU["GPU Subsystem<br>3D Graphics"]
 
-    subgraph APP["Application IP"]
-        APPIP["IP Blocks"]
-        APPINT["FlexWay"]
-        APPIP --> APPINT
-    end
+DSP["DSP Subsystem<br>FlexWay + IP"]
 
-    MULTI["Multimedia (AES / 2D / MPEG)"]
+APP["Application IP<br>FlexWay + IP"]
+
+MULTI["Multimedia<br>AES / 2D / MPEG"]
+
 end
 
-GPU --> NOC
-DSPINT --> NOC
-APPINT --> NOC
-MULTI --> NOC
+%% ================= INTERCONNECT =================
+NOC["FlexNoC Top Level Interconnect"]
 
 %% ================= BOTTOM ROW =================
-subgraph BOTTOM["System & I/O"]
-    direction LR
+subgraph BOTTOM[" "]
+direction LR
 
-    subgraph MEM["Memory"]
-        MS["Scheduler"]
-        MC["Controller"]
-        DDR["DDR"]
-        MS --> MC --> DDR
-    end
+MEM["Memory Subsystem<br>Scheduler + DDR"]
 
-    subgraph WIRED["Wired I/O"]
-        USB["USB"]
-        PCIE["PCIe"]
-        ETH["Ethernet"]
-    end
+WIRED["USB / PCIe / Ethernet"]
 
-    subgraph WIRELESS["Wireless"]
-        WIFI["WiFi"]
-        GSM["GSM"]
-        LTE["LTE"]
-    end
+WIRELESS["WiFi / GSM / LTE"]
 
-    subgraph SEC["Security"]
-        CRYPTO["Crypto FW"]
-        RSA["RSA Engine"]
-    end
+SEC["Security<br>Crypto + RSA"]
 
-    subgraph IO["I/O Peripherals"]
-        HDMI["HDMI"]
-        MIPI["MIPI"]
-        DISP["Display"]
-        PMU["PMU"]
-        JTAG["JTAG"]
-    end
+IO["I/O<br>HDMI / MIPI / JTAG"]
+
 end
 
-MEM --> NOC
-WIRED --> NOC
-WIRELESS --> NOC
-SEC --> NOC
-IO --> NOC
+%% ================= CONNECTIONS =================
+
+TOP --> NOC
+NOC --> BOTTOM
+
+%% individual connections for clarity
+CPU --> NOC
+GPU --> NOC
+DSP --> NOC
+APP --> NOC
+MULTI --> NOC
+
+NOC --> MEM
+NOC --> WIRED
+NOC --> WIRELESS
+NOC --> SEC
+NOC --> IO
 
 %% ================= RIGHT SIDE =================
 EXT["InterChip Links"]
