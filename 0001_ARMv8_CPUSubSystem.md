@@ -1,111 +1,104 @@
-# SoC Architecture – Mermaid Diagram
+# SoC Architecture – Visual Layout (Closer to Image)
 
 ```mermaid
-flowchart TB
+flowchart LR
 
 %% ================= CPU =================
 subgraph CPU["CPU Subsystem (big.LITTLE)"]
+    direction TB
     subgraph A7["A7 Cluster"]
-        A7C1["A7 Core"]
-        A7C2["A7 Core"]
-        A7C3["A7 Core"]
-        A7C4["A7 Core"]
+        A7C1["A7"]
+        A7C2["A7"]
+        A7C3["A7"]
+        A7C4["A7"]
         A7L2["L2 Cache"]
-        A7C1 --> A7L2
-        A7C2 --> A7L2
-        A7C3 --> A7L2
-        A7C4 --> A7L2
     end
 
     subgraph A15["A15 Cluster"]
-        A15C1["A15 Core"]
-        A15C2["A15 Core"]
+        A15C1["A15"]
+        A15C2["A15"]
         A15L2["L2 Cache"]
-        A15C1 --> A15L2
-        A15C2 --> A15L2
     end
 
     CCI["Coherent Interconnect"]
-    A7L2 --> CCI
-    A15L2 --> CCI
+    A7 --> A7L2 --> CCI
+    A15 --> A15L2 --> CCI
 end
 
-%% ================= TOP INTERCONNECT =================
+%% ================= TOP BUS =================
 NOC["FlexNoC Top Level Interconnect"]
 
-CCI --> NOC
+CPU --> NOC
 
-%% ================= GPU =================
-GPU["GPU Subsystem (3D Graphics)"]
+%% ================= TOP ROW =================
+subgraph TOP["Design-Specific Subsystems"]
+    direction LR
+
+    GPU["GPU (3D Graphics)"]
+
+    subgraph DSP["DSP Subsystem"]
+        DSPIP["IP Blocks"]
+        DSPINT["FlexWay"]
+        DSPIP --> DSPINT
+    end
+
+    subgraph APP["Application IP"]
+        APPIP["IP Blocks"]
+        APPINT["FlexWay"]
+        APPIP --> APPINT
+    end
+
+    MULTI["Multimedia (AES / 2D / MPEG)"]
+end
+
 GPU --> NOC
-
-%% ================= DSP =================
-subgraph DSP["DSP Subsystem (A/V)"]
-    DSPIP1["IP"]
-    DSPIP2["IP"]
-    DSPIP3["IP"]
-    DSPINT["FlexWay Interconnect"]
-    DSPIP1 --> DSPINT
-    DSPIP2 --> DSPINT
-    DSPIP3 --> DSPINT
-end
 DSPINT --> NOC
-
-%% ================= APPLICATION IP =================
-subgraph APP["Application IP Subsystem"]
-    APPIP1["IP"]
-    APPIP2["IP"]
-    APPIP3["IP"]
-    APPINT["FlexWay Interconnect"]
-    APPIP1 --> APPINT
-    APPIP2 --> APPINT
-    APPIP3 --> APPINT
-end
 APPINT --> NOC
+MULTI --> NOC
 
-%% ================= MEMORY =================
-subgraph MEM["Memory Subsystem"]
-    MS["Memory Scheduler"]
-    MC["Memory Controller"]
-    DDR["LPDDR / DDR"]
-    MS --> MC
-    MC --> DDR
+%% ================= BOTTOM ROW =================
+subgraph BOTTOM["System & I/O"]
+    direction LR
+
+    subgraph MEM["Memory"]
+        MS["Scheduler"]
+        MC["Controller"]
+        DDR["DDR"]
+        MS --> MC --> DDR
+    end
+
+    subgraph WIRED["Wired I/O"]
+        USB["USB"]
+        PCIE["PCIe"]
+        ETH["Ethernet"]
+    end
+
+    subgraph WIRELESS["Wireless"]
+        WIFI["WiFi"]
+        GSM["GSM"]
+        LTE["LTE"]
+    end
+
+    subgraph SEC["Security"]
+        CRYPTO["Crypto FW"]
+        RSA["RSA Engine"]
+    end
+
+    subgraph IO["I/O Peripherals"]
+        HDMI["HDMI"]
+        MIPI["MIPI"]
+        DISP["Display"]
+        PMU["PMU"]
+        JTAG["JTAG"]
+    end
 end
+
 MEM --> NOC
-
-%% ================= WIRED PERIPHERALS =================
-subgraph WIRED["High-Speed Wired Peripherals"]
-    USB["USB 2.0 / 3.0"]
-    PCIE["PCIe"]
-    ETH["Ethernet"]
-end
 WIRED --> NOC
-
-%% ================= WIRELESS =================
-subgraph WIRELESS["Wireless Subsystem"]
-    WIFI["WiFi"]
-    GSM["GSM"]
-    LTE["LTE"]
-end
 WIRELESS --> NOC
-
-%% ================= SECURITY =================
-subgraph SEC["Security Subsystem"]
-    CRYPTO["Crypto Firewall"]
-    RSA["RSA / Cert Engine"]
-end
 SEC --> NOC
-
-%% ================= IO =================
-subgraph IO["I/O Peripherals"]
-    HDMI["HDMI"]
-    MIPI["MIPI"]
-    DISP["Display"]
-    PMU["PMU"]
-    JTAG["JTAG"]
-end
 IO --> NOC
 
-%% ================= EXTERNAL =================
+%% ================= RIGHT SIDE =================
 EXT["InterChip Links"]
 NOC --> EXT
