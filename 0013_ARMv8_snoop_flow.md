@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     A[CPU Core 0 Issues Read/Write] --> B[L1 Cache Check]
     
