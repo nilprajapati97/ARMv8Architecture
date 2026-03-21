@@ -7,10 +7,10 @@
 ```mermaid
 flowchart LR
     A[CPU0 Reset EL3] --> B[BootROM]
-    B --> C[BL1 (SRAM)]
-    C --> D[BL2 (DRAM Init)]
-    D --> E[BL31 (EL3 Runtime + PSCI)]
-    E --> F[Bootloader (U-Boot)]
+    B --> C[BL1 ->SRAM]
+    C --> D[BL2 -> DRAM Init]
+    D --> E[BL31 -> EL3 Runtime + PSCI]
+    E --> F[Bootloader -> U-Boot]
     F --> G[Linux Kernel]
     G --> H[User Space]
 ```
