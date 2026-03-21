@@ -21,7 +21,7 @@ flowchart TD
     B --> C[BL1]
     C --> D[BL2]
     D --> E[BL31]
-    E --> F[Bootloader (U-Boot)]
+    E --> F[Bootloader U-Boot]
     F --> G[Linux Kernel]
     G --> H[SMP Init]
     H --> I[Secondary Cores Online]
