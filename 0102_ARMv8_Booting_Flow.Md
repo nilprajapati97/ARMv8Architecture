@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant CPU0 as Primary Core (CPU0)
     participant ROM as BootROM
