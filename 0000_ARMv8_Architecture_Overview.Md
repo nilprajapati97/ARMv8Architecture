@@ -212,16 +212,6 @@ UMULH X0, X1, X2           ; X0 = X1 * X2 upper 64 bits unsigned
 NEG   X0, X1               ; X0 = -X1
 ADC   X0, X1, X2           ; X0 = X1 + X2 + Carry
 SBC   X0, X1, X2           ; X0 = X1 - X2 - NOT Carry
-
-### 6.1 6.2 Logical Operations
-AND   X0, X1, X2           ; Bitwise AND
-ANDS  X0, X1, X2           ; Bitwise AND and set flags
-ORR   X0, X1, X2           ; Bitwise OR
-EOR   X0, X1, X2           ; Bitwise XOR
-BIC   X0, X1, X2           ; Bit Clear AND NOT
-ORN   X0, X1, X2           ; OR NOT
-EON   X0, X1, X2           ; XOR NOT
-MVN   X0, X1               ; Bitwise NOT
 AND   X0, X1, X2           ; Bitwise AND
 ANDS  X0, X1, X2           ; Bitwise AND and set flags
 ORR   X0, X1, X2           ; Bitwise OR
