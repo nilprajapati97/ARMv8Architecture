@@ -222,3 +222,11 @@ BIC   X0, X1, X2           ; Bit Clear AND NOT
 ORN   X0, X1, X2           ; OR NOT
 EON   X0, X1, X2           ; XOR NOT
 MVN   X0, X1               ; Bitwise NOT
+AND   X0, X1, X2           ; Bitwise AND
+ANDS  X0, X1, X2           ; Bitwise AND and set flags
+ORR   X0, X1, X2           ; Bitwise OR
+EOR   X0, X1, X2           ; Bitwise XOR
+BIC   X0, X1, X2           ; Bit Clear AND NOT
+ORN   X0, X1, X2           ; OR NOT
+EON   X0, X1, X2           ; XOR NOT
+MVN   X0, X1               ; Bitwise NOT
