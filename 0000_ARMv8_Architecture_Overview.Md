@@ -213,7 +213,7 @@ NEG   X0, X1               ; X0 = -X1
 ADC   X0, X1, X2           ; X0 = X1 + X2 + Carry
 SBC   X0, X1, X2           ; X0 = X1 - X2 - NOT Carry
 
-6.2 Logical Operations
+### 6.1 6.2 Logical Operations
 AND   X0, X1, X2           ; Bitwise AND
 ANDS  X0, X1, X2           ; Bitwise AND and set flags
 ORR   X0, X1, X2           ; Bitwise OR
